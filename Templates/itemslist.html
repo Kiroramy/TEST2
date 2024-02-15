@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/itemlist.css' %}">
+    <title>Title</title>
+</head>
+<body style="background-color:#f1f1f1;">
+
+<ul class="nav nav-tabs" style="background-color:white;">
+  <li class="nav-item">
+    <a class="nav-link fa fa-home" href="{% url 'home-page' %}">Home</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link fa fa-user" href="{% url 'profile' %}">Profile</a>
+  </li>
+    <li class="nav-item dropdown">
+    <a class="nav-link active dropdown-toggle fa fa-shopping-cart" data-bs-toggle="dropdown">MarketPlace</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'market-place' %}">Home</a></li>
+      <li><a class="dropdown-item" href="{% url 'orders' %}">My Orders</a></li>
+      <li><a class="dropdown-item" href="{% url 'my-requests' %}">My Requests</a></li>
+    </ul>
+  </li>
+  <li>
+      <form class="d-flex" action="{% url 'market-search' %}" method="GET">
+        <input class="form-control" type="text" placeholder="Search in market" name="market-search-term" required>
+        <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  </li>
+
+</ul>
+<div class="container" style="background-color:#f1f1f1;">
+
+
+{% for item in object_list %}
+    <a href="/category/item/{{item.slug}}/"><div id="item_div" style="display:flex; padding:2%; margin-top:5%; ">
+        <img src="{{item.image.url}}" id="item_img" style="width:40%; height:40%;">
+         <h4 id="item_name" style="margin-left:3%;">{{item.name}}</h4>
+         <h4 id="item_price" style="margin-left:10%;">{{item.price}} E.G.P</h4>
+    </div></a>
+{% endfor %}
+</div>
+</body>
+</html>

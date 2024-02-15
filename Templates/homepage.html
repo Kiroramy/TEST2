@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body style="background-color: #f1f1f1;">
+
+<ul class="nav nav-tabs" style="background-color:white;">
+  <li class="nav-item">
+    <a class="nav-link active fa fa-home" href="{% url 'home-page' %}">Home</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link fa fa-user" href="{% url 'profile' %}">Profile</a>
+  </li>
+    <li class="nav-item">
+            <a class="nav-link fa fa-shopping-cart" href="{% url 'market-place' %}">MarketPlace</a>
+        </li>
+  <li>
+      <form class="d-flex" action="{% url 'search' %}" method="GET">
+        <input class="form-control" type="text" placeholder="Search" name="search-term">
+        <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  </li>
+
+</ul>
+<div class="container" style="padding:1%">
+    {% for post in object_list %}
+
+        <div style="border: 1px solid black; background-color: white; border-radius: 5px; margin-top:3%; padding:1%">
+            <div style="display:flex;">
+            <img src="{{post.user.profile_pics.url}}" alt="Image" style="width:10%; height:10%; border-radius: 15%;">
+            <h5 style=" margin-left:2%; margin-top:1%;">{{post.user.username}}</h5>
+            </div>
+            <h4 style=" margin-left:2%; margin-top:3%;">{{post.caption}}</h4>
+            <h6 style=" margin-left:2%">{{post.date_created}}</h6>
+            <h6 style=" margin-left:2%">{{request.path}}</h6>
+            <div style="display:flex;">
+                {% if post.vid_post %}
+                    <video width="50%" height="10%" controls>
+                        <source src="{{post.vid_post.url}}" type="video/mp4">
+                    </video>
+                {% else %}
+                    <p>No Video available</p>
+                {% endif %}
+
+                {% if post.image_post %}
+                    <img src="{{post.image_post.url}}" alt="Image" style="width:49%; height:0%; margin-left:1%;" loading="lazy">
+                {% else %}
+                    <p style="margin-left:5%;">No image available</p>
+                {% endif %}
+            </div>
+            <br>
+            <div style="display:flex;">
+                <form method="POST" action="{% url 'like-post' post.slug %}" id="like-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit">
+                        <i class="fa fa-thumbs-up"></i><span>{{ post.likes.all.count }}</span>
+                    </button>
+                </form>
+
+                <form method="POST" action="{% url 'dislike-post' post.slug %}" id="dislike-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit">
+                        <i class="fa fa-thumbs-down"></i><span>{{ post.dislikes.all.count }}</span>
+                    </button>
+                </form>
+            </div>
+            <a href="/{{post.slug}}/comments/"> <button type="button" class="btn">Comments</button></a>
+        </div>
+
+    {% endfor %}
+</div>
+
+</body>
+</html>

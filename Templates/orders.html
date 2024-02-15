@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="background-color:#f1f1f1;">
+<ul class="nav nav-tabs" style="background-color:white;">
+  <li class="nav-item">
+    <a class="nav-link fa fa-home" href="{% url 'home-page' %}">Home</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link fa fa-user" href="{% url 'profile' %}">Profile</a>
+  </li>
+    <li class="nav-item">
+            <a class="nav-link active fa fa-shopping-cart" href="{% url 'market-place' %}">MarketPlace</a>
+        </li>
+  <li>
+      <form class="d-flex" action="{% url 'market-search' %}" method="GET">
+        <input class="form-control" type="text" placeholder="Search in market" name="market-search-term" required>
+        <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  </li>
+
+</ul>
+
+<div class="container">
+
+    {% for order in object_list %}
+        <div style="background-color:white; margin-top:5%; padding:2%; margin-bottom:4%;">
+            <img src="{{ order.item.image.url }}" style="margin-left:25%; width:50%; height:25%; margin-top:5%;">
+            <h2 style="margin-top:5%; text-align:center;"> Order Name: {{ order.item.name }}</h2>
+            <h3 style="text-align:center; margin-top:5%;">{{ order.item.price }} E.G.P</h3>
+            <h4 style="margin-top:5%; margin-left:2%;">Description: {{ order.item.des }}</h4>
+            <h4 style="margin-top:5%; margin-left:2%;">Category: {{ order.item.category }}</h4>
+            <h4 style="margin-top:5%; margin-left:2%;">State: {{ order.reply }}</h4>
+            <h4 style="margin-top:5%; margin-left:2%;">Delivery Date: {{ order.delivery_date }}</h4>
+        </div>
+    {% endfor %}
+
+</div>
+</body>
+</html>

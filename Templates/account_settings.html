@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{% load crispy_forms_tags %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <title>ACCOUNT SETTINGS</title>
+</head>
+<body style="background-color: #f1f1f1">
+
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container-fluid">
+    <img src="testlogo.jpg" alt="Avatar Logo" style="width:70px;" class="rounded-pill">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)"><i class="fa fa-home" aria-hidden="true"></i>
+ Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i>
+ Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">Link</a>
+        </li>
+      </ul>
+      <div id="out">
+        <a class="nav-link ms-auto" href="{% url 'logout' %}" id="outbut"><i class="fa fa-sign-out" aria-hidden="true"></i>
+ logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="container">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+            <input class="btn btn-primary" type="submit" name="Update Information" style="width:15%;  text-align: center;">
+
+
+
+    </form>
+</div>
+</body>
+</html>

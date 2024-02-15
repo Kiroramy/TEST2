@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <title>Item Show</title>
+</head>
+<body style="background-color:#f1f1f1;">
+
+<ul class="nav nav-tabs" style="background-color:white;">
+  <li class="nav-item">
+    <a class="nav-link fa fa-home" href="{% url 'home-page' %}">Home</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link fa fa-user" href="{% url 'profile' %}">Profile</a>
+  </li>
+    <li class="nav-item dropdown">
+    <a class="nav-link active dropdown-toggle fa fa-shopping-cart" data-bs-toggle="dropdown" href="#">MarketPlace</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'market-place' %}">Home</a></li>
+      <li><a class="dropdown-item" href="{% url 'orders' %}">My Orders</a></li>
+      <li><a class="dropdown-item" href="{% url 'my-requests' %}">My Requests</a></li>
+    </ul>
+  </li>
+  <li>
+      <form class="d-flex" action="{% url 'market-search' %}" method="GET">
+        <input class="form-control" type="text" placeholder="Search in market" name="market-search-term" required>
+        <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  </li>
+
+</ul>
+<div class="container">
+    {% for item in object_list %}
+        <div style="background-color:white; margin-top:5%;">
+            <img src="{{item.image.url}}" style="margin-left:25%; width:50%; height:25%; margin-top:5%;">
+             <h2 style="text-align:center; margin-top:5%;">{{item.name}}</h2>
+             <h3 style="text-align:center; margin-top:5%;">{{item.price}} E.G.P</h3>
+             <h4 style="margin-top:5%; margin-left:2%;">Description: {{item.des}}</h4>
+             <h4 style="margin-top:5%; margin-left:2%;">Category: {{item.category}}</h4>
+            {% if item.exist %}
+                <h4 style="margin-top:5%; margin-left:2%;">State: Available</h4>
+            {% else %}
+                <h4 style="margin-top:5%; margin-left:2%;">Not available</h4>
+            {% endif %}
+            <a href="/confirmation-order/{{item.slug}}/"> <button type="button" class="btn btn-primary" style="margin-left:33%; margin-top:5%;">Create Order</button></a>
+        </div>
+
+    {% endfor %}
+</div>
+</body>
+</html>

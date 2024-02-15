@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Search Result</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container-fluid">
+    <img src="testlogo.jpg" alt="Avatar Logo" style="width:70px;" class="rounded-pill">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home-page' %}"><i class="fa fa-home" aria-hidden="true"></i>
+ Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i>
+ Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">Link</a>
+        </li>
+      </ul>
+        <form class="d-flex" action="{% url 'search' %}" method="GET">
+        <input class="form-control me-2" type="text" placeholder="Search" name="search-term">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+      <div id="out">
+        <a class="nav-link ms-auto" href="{% url 'logout' %}" id="outbut"><i class="fa fa-sign-out" aria-hidden="true"></i>
+ logout</a>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+{% for user in object_list %}
+<div class="card">
+  <div class="card-body">
+    <img src="{{user.profile_pics.url}}" style="width:5%; height:5%">
+        <a href="/user/{{user.slug}}/" ><h2>@{{user.username}}</h2></a>
+
+
+  </div>
+</div>
+{% endfor %}
+
+
+
+
+
+</body>
+</html>

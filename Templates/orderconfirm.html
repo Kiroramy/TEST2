@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load crispy_forms_tags %}
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <title>OrderConfirm</title>
+</head>
+<body>
+
+<ul class="nav nav-tabs" style="background-color:white;">
+  <li class="nav-item">
+    <a class="nav-link fa fa-home" href="{% url 'home-page' %}">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link fa fa-user" href="{% url 'profile' %}">Profile</a>
+  </li>
+
+  <li>
+      <form class="d-flex" action="{% url 'search' %}" method="GET">
+        <input class="form-control" type="text" placeholder="Search" name="search-term">
+        <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  </li>
+    <li class="nav-item">
+        <a class="nav-link fa fa-sign-out" href="{% url 'logout' %}">logout</a>
+    </li>
+</ul>
+<div class="container">
+    {% for item in object_list %}
+        <div style="background-color:white; margin-top:5%;">
+            <img src="{{item.image.url}}" style="margin-left:25%; width:50%; height:25%; margin-top:5%;">
+             <h2 style="text-align:center; margin-top:5%;">{{item.name}}</h2>
+             <h3 style="text-align:center; margin-top:5%;">{{item.price}} E.G.P</h3>
+             <h4 style="margin-top:5%; margin-left:2%;">Description: {{item.des}}</h4>
+             <h4 style="margin-top:5%; margin-left:2%;">Category: {{item.category}}</h4>
+            {% if item.exist %}
+                <h4 style="margin-top:5%; margin-left:2%;">State: Available</h4>
+            {% else %}
+                <h4 style="margin-top:5%; margin-left:2%;">Not available</h4>
+            {% endif %}
+            <h3 style="text-align:center; margin-top:5%;">Your Name: {{request.user.username}}</h3>
+            <h3 style="text-align:center; margin-top:5%;">Your Adrees: {{request.user.adress}}</h3>
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button type="submit" class="btn btn-primary" style="margin-left:33%; margin-top:5%;">Confirm Order</button>
+            </form>
+        </div>
+
+    {% endfor %}
+    {% for message in messages %}
+    <div>
+           <h2>{{messages}}</h2>
+    </div>
+    {% endfor %}
+</div>
+</body>
+</html>

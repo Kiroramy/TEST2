@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+    <title>{{friend.username}}</title>
+</head>
+<body>
+
+
+<ul class="nav nav-tabs" style="background-color:white;">
+  <li class="nav-item">
+    <a class="nav-link fa fa-home" href="{% url 'home-page' %}">Home</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link active fa fa-user" href="{% url 'profile' %}">Profile</a>
+  </li>
+    <li class="nav-item">
+            <a class="nav-link fa fa-sign-out" href="{% url 'logout' %}">logout</a>
+        </li>
+  <li>
+      <form class="d-flex" action="{% url 'search' %}" method="GET">
+        <input class="form-control" type="text" placeholder="Search" name="search-term">
+        <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  </li>
+
+</ul>
+<div class="containers">
+<div class="row" id="rowdiv">
+  <div class=" backwhite" id="imgdiv" style="width:35%; margin-top:5%; margin-left:4%;">
+      <img src="{{request.user.profile_pics.url}}" alt="Profile Picture" id="profimg">
+      <h5 style="color:#00ccff; margin:auto; text-align: center;">@{{friend.username}}</h5>
+      {% if is_following %}
+          <a href="/unfollow/{{friend.slug}}" ><button type="button" class="btn btn-danger" style="margin-top:1%; margin-left:39%;">Unfollow </button> </a>
+      {% else %}
+        <a href="/follow/{{friend.slug}}" style="margin-left:40%; margin-top:1%; "> <button type="button" class="btn btn-success">Follow </button> </a>
+      {% endif %}
+  </div>
+
+    <div class="  backwhite" id="details" style="width: 50%; border-radius: 25px; padding: 5px; border: 3px solid black; margin-right:5%; margin-top:1%;">
+      <h3 class="br">{{friend.first_name}} {{friend.last_name}}</h3>
+      <h5 class="br">{{friend.bio}}</h5>
+        <h5 class="br">{{friend.phone_num}}</h5>
+      <h6 class="br">{{friend.email}}</h6>
+    </div>
+</div>
+</div>
+
+<h6 style="margin-left:1%;">{{friend.get_num_posts}} Posts</h6>
+<div class="container" style="padding:10px">
+{% for post in object_list %}
+<div style="border: 1px solid black; background-color: white; border-radius: 5px; margin-top:1%;">
+    <h5 style=" margin-left:2%">{{post.caption}}</h5>
+    <h6 style=" margin-left:2%">{{post.date_created}}</h6>
+    {% if post.image_post %}
+        <img src="{{post.image_post.url}}" alt="Image" style="width:60%; height:50%" loading="lazy">
+    {% else %}
+        <p>No image available</p>
+{% endif %}
+    <br>
+    <a href="/{{post.slug}}/comments/"> <button type="button" class="btn">Comments</button></a>
+</div>
+
+{% endfor %}
+</body>
+</html>

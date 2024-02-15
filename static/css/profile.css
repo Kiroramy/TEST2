@@ -1,0 +1,79 @@
+body{
+background-color: #f1f1f1;
+}
+
+#logo{
+width: 100px;
+height: 50px;
+}
+
+.linkmarg {
+margin-left: 15px;
+
+}
+
+#logout{
+width: 5.7%;
+}
+
+#outbut {
+color: white;
+  line-height: 30px;
+
+font-size: 85%;
+}
+
+#out{
+text-align: right;
+}
+
+.backwhite {
+background-color: white;
+}
+
+#imgdiv {
+width: 20%;
+height: 75%;
+border-radius: 25px;
+padding: 10px;
+ border: 3px solid black;
+margin-right:1%;
+margin-left:1%;
+}
+
+#profimg {
+width: 90%;
+height: 90%;
+display: block;
+border: 2px solid black;
+border-radius: 4px;
+padding: 5px;
+
+margin: auto;
+
+}
+
+#details{
+width: 25%;
+height: 75%;
+border-radius: 25px;
+padding: 10px;
+ border: 3px solid black;
+margin-right:1%;
+margin-left:1%;
+}
+
+#rowdiv {
+margin-top:1%;
+}
+
+#editprof {
+width:35%;
+
+border-radius: 15px;
+
+}
+.br{
+margin-top:5%;
+}
+
